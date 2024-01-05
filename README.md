@@ -15,9 +15,11 @@ In this project, Amazon Aurora Postgresql with pgvector is used for knowledge ba
    - An Amazon Aurora Postgresql cluster for storing embeddings.
 2. Open SageMaker Studio and then open a new **System terminal** under SageMaker Studio Classic
 3. Run the following commands on the terminal to clone the code repository for this project:
+
    ```
-   git clone https://github.com/skelastic/rag-aurora-sagemaker.git
+   git clone https://github.com/skelastic/llm-sagemaker-rag-aurora.git
    ```
+
 4. Open the `data_ingestion_to_pgvector.ipynb` notebook.
 5. Run Streamlit application
 

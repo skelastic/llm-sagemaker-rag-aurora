@@ -1,9 +1,7 @@
 
-# RAG Application CDK Python project!
+# RAG Application CDK
 
 ![rag_with_pgvector_arch](./rag_with_pgvector_arch.svg)
-
-This is an QA application with LLMs and RAG project for CDK development with Python.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
@@ -27,12 +25,6 @@ step to activate your virtualenv.
 $ source .venv/bin/activate
 ```
 
-If you are a Windows platform, you would activate the virtualenv like this:
-
-```
-% .venv\Scripts\activate.bat
-```
-
 Once the virtualenv is activated, you can install the required dependencies.
 
 ```
@@ -43,28 +35,12 @@ To add additional dependencies, for example other CDK libraries, just add
 them to your `setup.py` file and rerun the `pip install -r requirements.txt`
 command.
 
-Before synthesizing the CloudFormation, you should set approperly the cdk context configuration file, `cdk.context.json`.
-
-For example:
-
-```
-{
-  "db_cluster_name": "postgresql-cluster-name"
-}
-```
 
 Now this point you can now synthesize the CloudFormation template for this code.
 
 ```
-(.venv) $ export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
-(.venv) $ export CDK_DEFAULT_REGION=us-west-2 # your-aws-account-region
-(.venv) $ cdk synth --all
-```
-
-Now we will be able to deploy all the CDK stacks at once like this:
-
-```
-(.venv) $ cdk deploy --require-approval never --all
+(.venv) $ cdk bootstrap --profile AWS-1234567890123
+(.venv) $ npx cdk deploy --profile AWS-1234567890123 --all
 ```
 
 Or, we can provision each CDK stack one at a time like this:
@@ -122,19 +98,3 @@ Delete the CloudFormation stacks by running the below command.
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
-
-Enjoy!
-
-## References
-
- * [Leverage pgvector and Amazon Aurora PostgreSQL for Natural Language Processing, Chatbots and Sentiment Analysis (2023-07-13)](https://aws.amazon.com/blogs/database/leverage-pgvector-and-amazon-aurora-postgresql-for-natural-language-processing-chatbots-and-sentiment-analysis/)
- * [Building AI-powered search in PostgreSQL using Amazon SageMaker and pgvector (2023-05-02)](https://aws.amazon.com/blogs/database/building-ai-powered-search-in-postgresql-using-amazon-sagemaker-and-pgvector/)
- * [Use proprietary foundation models from Amazon SageMaker JumpStart in Amazon SageMaker Studio (2023-06-27)](https://aws.amazon.com/blogs/machine-learning/use-proprietary-foundation-models-from-amazon-sagemaker-jumpstart-in-amazon-sagemaker-studio/)
- * [AWS Deep Learning Containers Images](https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/deep-learning-containers-images.html)
- * [Securing Amazon SageMaker Studio connectivity using a private VPC (2020-10-22)](https://aws.amazon.com/blogs/machine-learning/securing-amazon-sagemaker-studio-connectivity-using-a-private-vpc/)
- * [Connect SageMaker Studio Notebooks in a VPC to External Resources](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-notebooks-and-internet-access.html)
- * [Give SageMaker Processing Jobs Access to Resources in Your Amazon VPC](https://docs.aws.amazon.com/sagemaker/latest/dg/process-vpc.html)
-   * **Configure the VPC Security Group**
-     * In distributed processing, you must allow communication between the different containers in the same processing job. To do that, configure a rule for your security group that allows inbound connections between members of the same security group.
- * [Using the Amazon SageMaker Studio Image Build CLI to build container images from your Studio notebooks (2020-09-14)](https://aws.amazon.com/blogs/machine-learning/using-the-amazon-sagemaker-studio-image-build-cli-to-build-container-images-from-your-studio-notebooks/)
- * [How can I troubleshoot the InternalServerError response on Amazon SageMaker? - AWS re:Post](https://repost.aws/knowledge-center/sagemaker-http-500-internal-server-error)
