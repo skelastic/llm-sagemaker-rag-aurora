@@ -1,0 +1,869 @@
+{
+ "Resources": {
+  "RAGAppVPC19F11A0E": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/Resource"
+   }
+  },
+  "RAGAppVPCPublicSubnet1Subnet2A85D945": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2a",
+    "CidrBlock": "10.0.0.0/20",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet1/Subnet"
+   }
+  },
+  "RAGAppVPCPublicSubnet1RouteTableB200AF59": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet1/RouteTable"
+   }
+  },
+  "RAGAppVPCPublicSubnet1RouteTableAssociationB821020D": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPublicSubnet1RouteTableB200AF59"
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPublicSubnet1Subnet2A85D945"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "RAGAppVPCPublicSubnet1DefaultRoute28F34D66": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "RAGAppVPCIGW38EAF689"
+    },
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPublicSubnet1RouteTableB200AF59"
+    }
+   },
+   "DependsOn": [
+    "RAGAppVPCVPCGWD2250120"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "RAGAppVPCPublicSubnet1EIPC2C40337": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet1/EIP"
+   }
+  },
+  "RAGAppVPCPublicSubnet1NATGateway924281D3": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "RAGAppVPCPublicSubnet1EIPC2C40337",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPublicSubnet1Subnet2A85D945"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "RAGAppVPCPublicSubnet1DefaultRoute28F34D66",
+    "RAGAppVPCPublicSubnet1RouteTableAssociationB821020D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet1/NATGateway"
+   }
+  },
+  "RAGAppVPCPublicSubnet2SubnetD75218D1": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2b",
+    "CidrBlock": "10.0.16.0/20",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet2/Subnet"
+   }
+  },
+  "RAGAppVPCPublicSubnet2RouteTable724633BD": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet2/RouteTable"
+   }
+  },
+  "RAGAppVPCPublicSubnet2RouteTableAssociationD06DE724": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPublicSubnet2RouteTable724633BD"
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPublicSubnet2SubnetD75218D1"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "RAGAppVPCPublicSubnet2DefaultRoute01B618EB": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "RAGAppVPCIGW38EAF689"
+    },
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPublicSubnet2RouteTable724633BD"
+    }
+   },
+   "DependsOn": [
+    "RAGAppVPCVPCGWD2250120"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "RAGAppVPCPublicSubnet2EIP350031F8": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet2"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet2/EIP"
+   }
+  },
+  "RAGAppVPCPublicSubnet2NATGateway4897192D": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "RAGAppVPCPublicSubnet2EIP350031F8",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPublicSubnet2SubnetD75218D1"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet2"
+     }
+    ]
+   },
+   "DependsOn": [
+    "RAGAppVPCPublicSubnet2DefaultRoute01B618EB",
+    "RAGAppVPCPublicSubnet2RouteTableAssociationD06DE724"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet2/NATGateway"
+   }
+  },
+  "RAGAppVPCPublicSubnet3Subnet9FE0D1F9": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2c",
+    "CidrBlock": "10.0.32.0/20",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet3/Subnet"
+   }
+  },
+  "RAGAppVPCPublicSubnet3RouteTableE8D9EE56": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet3/RouteTable"
+   }
+  },
+  "RAGAppVPCPublicSubnet3RouteTableAssociationEE2BA3FC": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPublicSubnet3RouteTableE8D9EE56"
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPublicSubnet3Subnet9FE0D1F9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet3/RouteTableAssociation"
+   }
+  },
+  "RAGAppVPCPublicSubnet3DefaultRoute2B5E0786": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "RAGAppVPCIGW38EAF689"
+    },
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPublicSubnet3RouteTableE8D9EE56"
+    }
+   },
+   "DependsOn": [
+    "RAGAppVPCVPCGWD2250120"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet3/DefaultRoute"
+   }
+  },
+  "RAGAppVPCPublicSubnet3EIPD10D752E": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet3"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet3/EIP"
+   }
+  },
+  "RAGAppVPCPublicSubnet3NATGateway4653E6D4": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "RAGAppVPCPublicSubnet3EIPD10D752E",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPublicSubnet3Subnet9FE0D1F9"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PublicSubnet3"
+     }
+    ]
+   },
+   "DependsOn": [
+    "RAGAppVPCPublicSubnet3DefaultRoute2B5E0786",
+    "RAGAppVPCPublicSubnet3RouteTableAssociationEE2BA3FC"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PublicSubnet3/NATGateway"
+   }
+  },
+  "RAGAppVPCPrivateSubnet1SubnetAEDC78DA": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2a",
+    "CidrBlock": "10.0.48.0/20",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet1/Subnet"
+   }
+  },
+  "RAGAppVPCPrivateSubnet1RouteTable5ED586C7": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet1/RouteTable"
+   }
+  },
+  "RAGAppVPCPrivateSubnet1RouteTableAssociationC0EA5EAD": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPrivateSubnet1RouteTable5ED586C7"
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPrivateSubnet1SubnetAEDC78DA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "RAGAppVPCPrivateSubnet1DefaultRoute73291720": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "RAGAppVPCPublicSubnet1NATGateway924281D3"
+    },
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPrivateSubnet1RouteTable5ED586C7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "RAGAppVPCPrivateSubnet2SubnetB9256C5A": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2b",
+    "CidrBlock": "10.0.64.0/20",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet2/Subnet"
+   }
+  },
+  "RAGAppVPCPrivateSubnet2RouteTableE2FC30CE": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet2/RouteTable"
+   }
+  },
+  "RAGAppVPCPrivateSubnet2RouteTableAssociationA43C39A3": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPrivateSubnet2RouteTableE2FC30CE"
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPrivateSubnet2SubnetB9256C5A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "RAGAppVPCPrivateSubnet2DefaultRoute87A68867": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "RAGAppVPCPublicSubnet2NATGateway4897192D"
+    },
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPrivateSubnet2RouteTableE2FC30CE"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "RAGAppVPCPrivateSubnet3Subnet63066A5C": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2c",
+    "CidrBlock": "10.0.80.0/20",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PrivateSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet3/Subnet"
+   }
+  },
+  "RAGAppVPCPrivateSubnet3RouteTableDF361146": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC/PrivateSubnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet3/RouteTable"
+   }
+  },
+  "RAGAppVPCPrivateSubnet3RouteTableAssociation48BADBB5": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPrivateSubnet3RouteTableDF361146"
+    },
+    "SubnetId": {
+     "Ref": "RAGAppVPCPrivateSubnet3Subnet63066A5C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet3/RouteTableAssociation"
+   }
+  },
+  "RAGAppVPCPrivateSubnet3DefaultRoute5EB634C5": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "RAGAppVPCPublicSubnet3NATGateway4653E6D4"
+    },
+    "RouteTableId": {
+     "Ref": "RAGAppVPCPrivateSubnet3RouteTableDF361146"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/PrivateSubnet3/DefaultRoute"
+   }
+  },
+  "RAGAppVPCIGW38EAF689": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "RAGVpcStack/RAGAppVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/IGW"
+   }
+  },
+  "RAGAppVPCVPCGWD2250120": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "RAGAppVPCIGW38EAF689"
+    },
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/VPCGW"
+   }
+  },
+  "RAGAppVPCS3322FE9D9": {
+   "Type": "AWS::EC2::VPCEndpoint",
+   "Properties": {
+    "RouteTableIds": [
+     {
+      "Ref": "RAGAppVPCPrivateSubnet1RouteTable5ED586C7"
+     },
+     {
+      "Ref": "RAGAppVPCPrivateSubnet2RouteTableE2FC30CE"
+     },
+     {
+      "Ref": "RAGAppVPCPrivateSubnet3RouteTableDF361146"
+     },
+     {
+      "Ref": "RAGAppVPCPublicSubnet1RouteTableB200AF59"
+     },
+     {
+      "Ref": "RAGAppVPCPublicSubnet2RouteTable724633BD"
+     },
+     {
+      "Ref": "RAGAppVPCPublicSubnet3RouteTableE8D9EE56"
+     }
+    ],
+    "ServiceName": {
+     "Fn::Join": [
+      "",
+      [
+       "com.amazonaws.",
+       {
+        "Ref": "AWS::Region"
+       },
+       ".s3"
+      ]
+     ]
+    },
+    "VpcEndpointType": "Gateway",
+    "VpcId": {
+     "Ref": "RAGAppVPC19F11A0E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/S3/Resource"
+   }
+  },
+  "RAGAppVPCRestrictDefaultSecurityGroupCustomResourceC79EE878": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "RAGAppVPC19F11A0E",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": "513397709908"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/RAGAppVPC/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ec2:us-west-2:513397709908:security-group/",
+             {
+              "Fn::GetAtt": [
+               "RAGAppVPC19F11A0E",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-513397709908-us-west-2",
+     "S3Key": "e77031893275c08bcaa0a774aa8b611727afd045b3b5d8e1e6f0f04063d9d386.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs16.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.e77031893275c08bcaa0a774aa8b611727afd045b3b5d8e1e6f0f04063d9d386",
+    "aws:asset:property": "Code"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/22QwW7CMBBEv4W74xY4wBUhVHEBK1RcK8fZwkKyjuw1CKH+ezci4AunnXkercee6Plcf47sNRauPhcNVvq+Y+vOStAPuIm+7zunlr+0N0tlUtWg26WKgHuWVekTw7etGsg8s0WM3qFl9PQK92K1Nv3YWP6yDFd7UybgRWRevCaGIPoZeDQZ3IKl6rEFYjUQKbuiuvNIPESf9k+VEH0KTm5OkX2brTR6f2SCv2ANQckDgOVfDkiHPr9N3CVZaW589PQx1eOxno1OEbEIiRhb0OVj/gO3ZizuYQEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "RAGVpcStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "VPCID": {
+   "Value": {
+    "Ref": "RAGAppVPC19F11A0E"
+   },
+   "Export": {
+    "Name": "RAGVpcStack-VPCID"
+   }
+  },
+  "ExportsOutputRefRAGAppVPC19F11A0EF8DC0A5C": {
+   "Value": {
+    "Ref": "RAGAppVPC19F11A0E"
+   },
+   "Export": {
+    "Name": "RAGVpcStack:ExportsOutputRefRAGAppVPC19F11A0EF8DC0A5C"
+   }
+  },
+  "ExportsOutputRefRAGAppVPCPrivateSubnet1SubnetAEDC78DA0859FA39": {
+   "Value": {
+    "Ref": "RAGAppVPCPrivateSubnet1SubnetAEDC78DA"
+   },
+   "Export": {
+    "Name": "RAGVpcStack:ExportsOutputRefRAGAppVPCPrivateSubnet1SubnetAEDC78DA0859FA39"
+   }
+  },
+  "ExportsOutputRefRAGAppVPCPrivateSubnet2SubnetB9256C5AC0B42312": {
+   "Value": {
+    "Ref": "RAGAppVPCPrivateSubnet2SubnetB9256C5A"
+   },
+   "Export": {
+    "Name": "RAGVpcStack:ExportsOutputRefRAGAppVPCPrivateSubnet2SubnetB9256C5AC0B42312"
+   }
+  },
+  "ExportsOutputRefRAGAppVPCPrivateSubnet3Subnet63066A5C3CBE8053": {
+   "Value": {
+    "Ref": "RAGAppVPCPrivateSubnet3Subnet63066A5C"
+   },
+   "Export": {
+    "Name": "RAGVpcStack:ExportsOutputRefRAGAppVPCPrivateSubnet3Subnet63066A5C3CBE8053"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

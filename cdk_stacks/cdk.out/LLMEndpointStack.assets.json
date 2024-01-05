@@ -1,0 +1,20 @@
+{
+  "version": "32.0.0",
+  "files": {
+    "b9ffdcb1d7eab9af18888ef9b76d1af35bfa400830760590345c5aa2923cda2b": {
+      "source": {
+        "path": "LLMEndpointStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "513397709908-us-west-2": {
+          "bucketName": "cdk-hnb659fds-assets-513397709908-us-west-2",
+          "objectKey": "b9ffdcb1d7eab9af18888ef9b76d1af35bfa400830760590345c5aa2923cda2b.json",
+          "region": "us-west-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::513397709908:role/cdk-hnb659fds-file-publishing-role-513397709908-us-west-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
