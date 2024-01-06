@@ -11,7 +11,7 @@ from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
 logger = logging.getLogger(__name__)
 
 
-def create_sagemaker_embeddings_from_js_model(embeddings_model_endpoint_name: str, aws_region: str = 'us-east-1') -> SagemakerEndpointEmbeddings:
+def create_sagemaker_embeddings_from_js_model(embeddings_model_endpoint_name: str, aws_region: str = 'us-west-2') -> SagemakerEndpointEmbeddings:
 
     # class for serializing/deserializing requests/responses to/from the embeddings model
     class ContentHandler(EmbeddingsContentHandler):

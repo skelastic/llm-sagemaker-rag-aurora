@@ -38,7 +38,7 @@ class bcolors:
 MAX_HISTORY_LENGTH = 5
 
 
-def _create_sagemaker_embeddings(endpoint_name: str, region: str = "us-east-1") -> SagemakerEndpointEmbeddings:
+def _create_sagemaker_embeddings(endpoint_name: str, region: str = "us-west-2") -> SagemakerEndpointEmbeddings:
 
     class ContentHandlerForEmbeddings(EmbeddingsContentHandler):
         """
@@ -78,7 +78,7 @@ def _create_sagemaker_embeddings(endpoint_name: str, region: str = "us-east-1") 
     return embeddings
 
 
-def _get_credentials(secret_id: str, region_name: str = 'us-east-1') -> str:
+def _get_credentials(secret_id: str, region_name: str = 'us-west-2') -> str:
     client = boto3.client('secretsmanager', region_name=region_name)
     response = client.get_secret_value(SecretId=secret_id)
     secrets_value = json.loads(response['SecretString'])

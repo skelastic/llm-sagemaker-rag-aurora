@@ -55,7 +55,7 @@ if __name__ == "__main__":
     parser.add_argument("--pgvector-secretid", type=str, default=None)
     parser.add_argument("--pgvector-collection-name", type=str, default=None)
 
-    parser.add_argument("--aws-region", type=str, default="us-east-1")
+    parser.add_argument("--aws-region", type=str, default="us-west-2")
     parser.add_argument("--embeddings-model-endpoint-name", type=str, default=None)
     parser.add_argument("--chunk-size-for-doc-split", type=int, default=500)
     parser.add_argument("--chunk-overlap-for-doc-split", type=int, default=30)
